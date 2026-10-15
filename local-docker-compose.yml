@@ -57,7 +57,7 @@ services:
 
 
   api:
-    build: ./pap
+    build: ./ecmp
     ports:
       - "8000:8000"
     # volumes:

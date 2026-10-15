@@ -1,0 +1,84 @@
+sources:
+  envoy_logs:
+    type: file
+    include:
+      - /var/log/envoy/access.log
+  
+  pep_logs:
+    type: file
+    include:
+      - /var/log/pep/access.log
+
+transforms:
+  remap_fields:
+    type: remap
+    inputs:
+      - envoy_logs
+    source: |
+      structured = parse_json(.message) ?? {}
+      del(.message)
+      . = merge!(., structured)
+      .timestamp = parse_timestamp!(.timestamp, "%+")
+      .timestamp = format_timestamp!(.timestamp, "%Y-%m-%dT%H:%M:%S%.3f")
+      del(.structured)
+
+  remap_pep:
+    type: remap
+    inputs:
+      - pep_logs
+    source: |
+      structured = parse_json(.message) ?? {}
+      del(.message)
+      . = merge!(., structured)
+      .timestamp = parse_timestamp!(.timestamp, "%+")
+      .timestamp = format_timestamp!(.timestamp, "%Y-%m-%dT%H:%M:%S%.3f")
+      del(.structured)
+      
+
+sinks:
+  clickhouse:
+    type: clickhouse
+    inputs:
+      - remap_fields
+    database: trident
+    table: envoy_logs
+    endpoint: http://clickhouse:8123
+    compression: none
+    format: json_each_row
+    batch:
+      max_events: 1
+    # request:
+    #   version: "1.1"
+    auth:
+      strategy: basic
+      user: trident
+      password: securepassword
+  
+  clickhouse_pep:
+    type: clickhouse
+    inputs:
+      - remap_pep
+    database: trident
+    table: pep_logs
+    endpoint: http://clickhouse:8123
+    compression: none
+    format: json_each_row
+    batch:
+      max_events: 1
+    auth:
+      strategy: basic
+      user: trident
+      password: securepassword
+
+  # debug:
+  #   type: console
+  #   inputs:
+  #     - remap_fields
+  #   encoding:
+  #     codec: json
+
+
+
+# .timestamp = parse_timestamp!(.timestamp, "%+")
+# .timestamp = parse_timestamp!(.timestamp, "%Y-%m-%dT%H:%M:%S%.f%")
+# .timestamp = replace(string!(.timestamp), "Z$", "")

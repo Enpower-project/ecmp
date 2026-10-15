@@ -1,0 +1,14 @@
+version: 0.1
+
+ecmp:
+  host: 
+  port: 
+  root_topic: "enpower"
+  cert: "/usr/local/share/ca-certificates/mqtt/"
+
+
+assets:
+  - id: "fd630e00-5e06-4aa0-9993-c081e0c16045"
+    name: "BSS1"
+
+

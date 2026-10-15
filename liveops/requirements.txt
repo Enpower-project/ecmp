@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+aiohttp
+python-dotenv
+python-jose[cryptography]
+paho-mqtt
+msgpack
+PyYAML

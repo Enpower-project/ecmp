@@ -1,0 +1,495 @@
+{
+  "info": {
+    "_postman_id": "b747ba43-4a8d-4592-9bf0-28d56142f125",
+    "name": "ECMP",
+    "description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" alt=\"\" height=\"1530\" width=\"2162\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31337460"
+  },
+  "item": [
+    {
+      "name": "members",
+      "item": [
+        {
+          "name": "Get all members",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/members",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "members"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create member",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"greenpoint-manager\",\r\n  \"first_name\": \"ecmp\",\r\n  \"last_name\": \"manager\",\r\n  \"email\": \"ecmp.manager@gp.eu\",\r\n  \"type\": \"prosumer\",\r\n  \"credentials\": {\r\n    \"type\": \"password\", \r\n    \"value\": \"verysecurepassword\",\r\n    \"temporary\": false\r\n  }\r\n}    \r\n    ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/members",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "members"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "grid_elements",
+      "item": [
+        {
+          "name": "Get grid elements",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/grid_elements",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "grid_elements"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create grid element",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"parent_id\": null,\r\n  \"code\": \"XCF1234-56\",\r\n  \"type\": \"LV_SUB\",\r\n  \"name\": \"gp_lv_ss\",\r\n  \"voltage_level\": \"0.4kV\",\r\n  \"location\": \"47.82701873254777,16.25414792258261\"\r\n}   ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/grid_elements",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "grid_elements"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "service_points",
+      "item": [
+        {
+          "name": "Get service points",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{baseUrl}}/service_points",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "service_points"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Service Point",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"member_id\": \"0e38c305-0859-49ad-b22f-13ecd491db30\",\r\n  \"code\": \"xcz65uf\",\r\n  \"voltage_level\": \"0.4kV\",\r\n  \"address\": {\r\n    \"street\": \"Main St 123\",\r\n    \"city\": \"Vienna\",\r\n    \"zip\": \"1010\"\r\n  },\r\n  \"timezone\": \"Europe/Vienna\",\r\n  \"active\": true,\r\n  \"grid_element_id\": \"e8e1dfd6-e5ed-4853-93d1-6f5bf48f97e9\"\r\n}   ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/service_points",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "service_points"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "meters",
+      "item": [
+        {
+          "name": "Get meters",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"member_id\": \"0e38c305-0859-49ad-b22f-13ecd491db30\",\r\n  \"code\": \"xcz65uf\",\r\n  \"voltage_level\": \"0.4kV\",\r\n  \"address\": {\r\n    \"street\": \"Main St 123\",\r\n    \"city\": \"Vienna\",\r\n    \"zip\": \"1010\"\r\n  },\r\n  \"timezone\": \"Europe/Vienna\",\r\n  \"active\": true,\r\n  \"grid_element_id\": \"e8e1dfd6-e5ed-4853-93d1-6f5bf48f97e9\"\r\n}   "
+            },
+            "url": {
+              "raw": "{{baseUrl}}/meters",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "meters"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create meter",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"sp_id\": \"b7b2fdde-4759-42d2-994d-9177db9059ce\",\r\n  \"serial_no\": \"xcz65uf\",\r\n  \"model\": \"0.4kV\",\r\n  \"installed_at\": \"2025-09-22T08:44:23.262585\"\r\n}   ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/meters",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "meters"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "channels",
+      "item": [
+        {
+          "name": "Get channels",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{baseUrl}}/channels",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "channels"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create channel",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"meter_id\": \"c42965a2-648d-447d-9daf-43736474da72\",\r\n  \"role\": \"import\",\r\n  \"uom\": \"Wh\",\r\n  \"interval_minutes\": 15,\r\n  \"scaling_factor\": 1.0\r\n}   "
+            },
+            "url": {
+              "raw": "{{baseUrl}}/channels",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "channels"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Assets",
+      "item": [
+        {
+          "name": "Set Output",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"asset_id\": \"744b3131-fc8e-4290-b6d6-bfc708e5b340\",\r\n  \"key\": \"charge_power\",\r\n  \"value\": 16000.0,\r\n  \"unit\": \"W\"\r\n}   ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/assets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "assets"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Flexibility",
+      "item": [
+        {
+          "name": "flexibility",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"start_datetime\": \"2025-12-20T22:00:00\",\r\n    \"end_datetime\": \"2025-12-21T22:00:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "flexibility",
+              "host": [
+                "flexibility"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Simulation",
+      "item": [
+        {
+          "name": "simulation",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"start_datetime\": \"2025-12-23T22:00:00\",\r\n    \"end_datetime\": \"2025-12-24T22:00:00\",\r\n    \"optimization_strategy\": \"no_optimization\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/simulation",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "simulation"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Status",
+      "item": [
+        {
+          "name": "status",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"datetime\": \"2026-01-14T22:00:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "status"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "clientSecret",
+        "value": "suPl7ag3QUGoBacnBGgCdHpT1vC7uV6W",
+        "type": "string"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://auth.enpower.comsensus.eu/realms/enpower/protocol/openid-connect/token",
+        "type": "string"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://auth.enpower.comsensus.eu/realms/enpower/protocol/openid-connect/auth",
+        "type": "string"
+      },
+      {
+        "key": "tokenName",
+        "value": "ecmp_token",
+        "type": "string"
+      },
+      {
+        "key": "useBrowser",
+        "value": false,
+        "type": "boolean"
+      },
+      {
+        "key": "clientId",
+        "value": "ecmp-management-client",
+        "type": "string"
+      },
+      {
+        "key": "redirect_uri",
+        "value": "https://oauth.pstmn.io/v1/callback",
+        "type": "string"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code_with_pkce",
+        "type": "string"
+      },
+      {
+        "key": "refreshRequestParams",
+        "value": [],
+        "type": "any"
+      },
+      {
+        "key": "tokenRequestParams",
+        "value": [],
+        "type": "any"
+      },
+      {
+        "key": "authRequestParams",
+        "value": [],
+        "type": "any"
+      },
+      {
+        "key": "challengeAlgorithm",
+        "value": "S256",
+        "type": "string"
+      },
+      {
+        "key": "addTokenTo",
+        "value": "header",
+        "type": "string"
+      },
+      {
+        "key": "client_authentication",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "id",
+      "value": "1"
+    },
+    {
+      "key": "base_url",
+      "value": "https://template.postman-echo.com"
+    }
+  ]
+}

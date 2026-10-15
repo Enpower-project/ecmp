@@ -1,0 +1,119 @@
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.5
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${KC_DB_NAME}
+      KC_DB_USERNAME: ${KC_DB_USER}
+      KC_DB_PASSWORD: ${KC_DB_PASSWORD}
+      KC_HTTP_ENABLED: true
+      KEYCLOAK_HOSTNAME_STRICT: false
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      # KC_LOG_LEVEL: DEBUG
+      # KC_LOG_LEVEL: TRACE
+    volumes:
+      - ./keycloak:/opt/keycloak/data/import
+    ports:
+      - "8081:8080"
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: unless-stopped
+    command: 
+      - start
+      - --import-realm
+      - --http-enabled=true
+      - --hostname-strict=false
+    networks:
+      - net
+
+
+  database:
+    image: timescale/timescaledb:2.22.0-pg16
+    restart: unless-stopped
+    volumes:
+      - database:/var/lib/postgresql/data
+      - ./db/init-multiple-dbs.sh:/docker-entrypoint-initdb.d/init-multiple-dbs.sh
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+      - KEYCLOAK_DB_NAME=${KC_DB_NAME}
+      - KC_DB_USER=${KC_DB_USER}
+      - KC_DB_PASSWORD=${KC_DB_PASSWORD}
+      - PAP_DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    healthcheck:
+      # test: [ "CMD", "pg_isready" ]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - net
+
+
+  api:
+    build: ./pap
+    ports:
+      - "8000:8000"
+    # volumes:
+    #   - ./pap/jobs/mqtt_logger/certs:/etc/ssl/certs:ro
+    depends_on:
+      - keycloak
+    networks:
+      - net
+
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    environment:
+    - CLICKHOUSE_DB=${CLICKHOUSE_DB_NAME}
+    - CLICKHOUSE_USER=${CLICKHOUSE_DB_USER}
+    - CLICKHOUSE_PASSWORD=${CLICKHOUSE_DB_PASSWORD}
+    restart: unless-stopped
+    volumes:
+      - clickhouse-data:/var/lib/clickhouse
+      - ./clickhouse/initdb:/docker-entrypoint-initdb.d 
+      - ./clickhouse/config.xml:/etc/clickhouse-server/config.d/custom.xml:ro
+      - ./clickhouse/logs:/var/log/clickhouse-server
+    networks:
+      - net
+
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=secret
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - database
+    networks:
+      - net
+  
+
+volumes:
+  database:
+  keycloak:
+  clickhouse-data:
+  grafana_data:
+
+networks:
+  net:
+    driver: bridge
+

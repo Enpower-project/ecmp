@@ -1,0 +1,56 @@
+<clickhouse>
+    <!-- ===========================
+         Basic logging configuration
+         =========================== -->
+    <logger>
+        <level>information</level>
+        <log>/var/log/clickhouse-server/clickhouse-server.log</log>
+        <errorlog>/var/log/clickhouse-server/clickhouse-server.err.log</errorlog>
+        <size>100M</size> 
+        <count>2</count> 
+    </logger>
+
+    <!-- ===========================
+         System logs: size & TTL limits
+         =========================== -->
+
+    <!-- Query log: keeps info about executed queries -->
+    <query_log>
+        <database>system</database>
+        <table>query_log</table>
+        <flush_interval_milliseconds>7500</flush_interval_milliseconds>
+        <ttl>event_date + INTERVAL 3 DAY DELETE</ttl>
+        <max_size_bytes>107374182</max_size_bytes>
+    </query_log>
+
+    <!-- Trace log: stack traces for profiling (disable or limit) -->
+    <!-- Option A: limit size -->
+    <trace_log>
+        <database>system</database>
+        <table>trace_log</table>
+        <flush_interval_milliseconds>7500</flush_interval_milliseconds>
+        <ttl>event_date + INTERVAL 7 DAY DELETE</ttl>
+        <max_size_rows>1000000</max_size_rows> 
+        <max_size_bytes>107374182</max_size_bytes> 
+    </trace_log>
+
+    <!-- Option B: disable trace logs -->
+    <!-- <disable_system_trace_log>true</disable_system_trace_log> -->
+
+    <!-- Text log: ClickHouse event log (similar to /var/log) -->
+    <text_log>
+        <ttl>event_date + INTERVAL 7 DAY DELETE</ttl>
+        <max_size_bytes>107374182</max_size_bytes>
+    </text_log>
+
+    <!-- Metric log: periodic performance metrics -->
+    <metric_log>
+        <ttl>event_date + INTERVAL 7 DAY DELETE</ttl>
+    </metric_log>
+
+    <!-- Part log: table part merges, inserts, etc. -->
+    <part_log>
+        <ttl>event_date + INTERVAL 3 DAY DELETE</ttl>
+    </part_log>
+
+</clickhouse>

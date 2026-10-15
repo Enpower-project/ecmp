@@ -1,0 +1,26 @@
+fastapi
+uvicorn
+python-jose[cryptography]
+aiohttp
+python-dotenv
+python-keycloak
+sqlalchemy
+# psycopg2-binary
+psycopg[binary]
+alembic
+clickhouse-connect
+PyJWT
+apscheduler
+lxml
+pandas
+paho-mqtt
+PyYAML
+msgpack
+osqp
+cvxpy==1.9.2
+ecos
+openpyxl
+pytz
+prophet==1.3.0
+scikit-learn>=1.4
+

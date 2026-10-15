@@ -1,0 +1,11 @@
+# Generating migration scripts
+
+```bash
+alembic revision --autogenerate -m "create tables"
+```
+
+# Apply the migrations
+
+```bash
+alembic upgrade head
+```

@@ -20,8 +20,7 @@ import app.api.forecast as forecast
 import app.api.pricing as pricing
 import app.api.status as status
 
-# import app.api.migrate as migrate
-# jobs
+
 from jobs.electricity_prices.electricity_prices import (
     upsert_day_ahead_prices, 
     upsert_current_prices,
@@ -30,12 +29,9 @@ from jobs.electricity_prices.electricity_prices import (
 from jobs.co2_emissions.co2_emissions import(
     upsert_latest_co2_emission,
     upsert_today_co2_emissions,
-    upsert_yesterday_co2_emissions
 )
-from jobs.gp_eudt.upsert_data import upsert_eudt_meter_data
-from jobs.gp_sonnen.upsert_historical_data import upsert_sonnen_historical_data_from_files
+
 from jobs.weather_data.weather_data import upsert_historical_weather_data
-from jobs.eds_publisher.eds_publisher import upsert_kpi_report
 from jobs.mqtt_logger.mqtt_logger import MQTTLogger, MQTTSettings
     
 
@@ -78,17 +74,11 @@ async def lifespan(app: FastAPI):
     await start_audit_worker()
     scheduler.add_job(upsert_day_ahead_prices, CronTrigger(minute="*/15"))
     scheduler.add_job(upsert_historical_prices, CronTrigger(minute="*/1"))
-    # scheduler.add_job(upsert_day_ahead_prices, CronTrigger(hour="12-23", minute="*/15"))
+    scheduler.add_job(upsert_day_ahead_prices, CronTrigger(hour="12-23", minute="*/15"))
     scheduler.add_job(upsert_current_prices, CronTrigger(minute="*/15"))
     scheduler.add_job(upsert_latest_co2_emission, CronTrigger(minute="*/15"))
     scheduler.add_job(upsert_today_co2_emissions, CronTrigger(minute="*/15"))
-    # scheduler.add_job(upsert_yesterday_co2_emissions, CronTrigger(minute="*/15"))
-    # scheduler.add_job(upsert_eudt_meter_data, CronTrigger(hour="*/12"))
-    scheduler.add_job(upsert_eudt_meter_data, CronTrigger(minute="*/15"))
-    # scheduler.add_job(upsert_sonnen_historical_data_from_files, CronTrigger(hour="*/12"))
-    scheduler.add_job(upsert_sonnen_historical_data_from_files, CronTrigger(minute="*/15"))
     scheduler.add_job(upsert_historical_weather_data, CronTrigger(minute="*/15"))
-    # scheduler.add_job(upsert_kpi_report, CronTrigger(minute="*/1"))
 
     scheduler.start()
     asyncio.create_task(mqtt_proxy.run())
@@ -117,7 +107,6 @@ app.include_router(flexibility.router)
 app.include_router(forecast.router)
 app.include_router(pricing.router)
 app.include_router(status.router)
-# app.include_router(migrate.router)
 
 
 

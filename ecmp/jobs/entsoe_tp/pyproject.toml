@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "entsoe_tp"
+version = "0.1.0"
+description = "Client for communication with ENTSO-E Transparency Platform."
+authors = [
+    { name="Klemen Bregar", email="klemen.bregar@comsensus.eu" }
+]
+license = { text = "Apache-2.0" }
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "pandas>=2.1",
+    "requests>=2.32.1",
+]
+
+[project.urls]
+Homepage = "https://gitlab.comsensus.eu/comsensus-sw/ems/entsoe_tp.git"
+Repository = "https://gitlab.comsensus.eu/comsensus-sw/ems/entsoe_tp.git"
+Issues = "https://gitlab.comsensus.eu/comsensus-sw/ems/entsoe_tp.git"

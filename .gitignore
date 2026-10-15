@@ -6,6 +6,5 @@ envoy/logs/*
 clickhouse/logs/
 pep/logs/
 __pycache__/
-pap/jobs/gp_sonnen/data*
 pap/jobs/mqtt_logger/certs/*
 *.env
